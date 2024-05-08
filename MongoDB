@@ -1,0 +1,54 @@
+import pymongo
+import urllib
+import certifi
+
+
+from pymongo.mongo_client import MongoClient
+
+
+url = ("mongodb+srv://pavan061821:"+urllib.parse.quote('Federer2023')
+       +"@cluster0.caaitgd.mongodb.net/?retryWrites=true&w=majority")
+url = "mongodb+srv://pavan061821:Federer2023@cluster0.caaitgd.mongodb.net/?retryWrites=true&w=majority"
+client = MongoClient(url)
+
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB")
+except Exception as c:
+    print("error: " + c.__str__())
+
+mydb = client["sample_analytics"]
+mycol = mydb["accounts"]
+
+#myquery = { 'account_id': '371138' }
+
+
+account_id1 = input("Enter Account ID: ")
+user_limit = input("Enter the limit: ")
+
+account_id1 = int(account_id1)
+user_limit = int(user_limit)
+
+
+
+final_query = {"account_id": {"$gt": account_id1} , "limit": {"$gt": user_limit} }
+print("Final Query: " + final_query.__str__())
+
+mydoc = mycol.find(final_query).limit(10)
+
+for y in mydoc:
+  print(y)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
